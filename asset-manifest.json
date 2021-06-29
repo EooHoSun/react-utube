@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/react-utube/static/css/main.74cd7f2c.chunk.css",
-    "main.js": "/react-utube/static/js/main.fad154d4.chunk.js",
-    "main.js.map": "/react-utube/static/js/main.fad154d4.chunk.js.map",
+    "main.js": "/react-utube/static/js/main.313de8d1.chunk.js",
+    "main.js.map": "/react-utube/static/js/main.313de8d1.chunk.js.map",
     "runtime-main.js": "/react-utube/static/js/runtime-main.b1084314.js",
     "runtime-main.js.map": "/react-utube/static/js/runtime-main.b1084314.js.map",
     "static/js/2.5d74dee2.chunk.js": "/react-utube/static/js/2.5d74dee2.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.b1084314.js",
     "static/js/2.5d74dee2.chunk.js",
     "static/css/main.74cd7f2c.chunk.css",
-    "static/js/main.fad154d4.chunk.js"
+    "static/js/main.313de8d1.chunk.js"
   ]
 }
