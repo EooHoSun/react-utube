@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    background-color: black;
+    align-items: center;
+    width: 100%;
+    justify-content: center;   
+}
+
+.input{
+    height: 100%;
+    font-size: 1.2rem;
+    flex-basis: 70%;
+}
+
+.thumbnail {
+    width: 10%;
+    height:100%;
+}
+
+.btn {
+}
+
+.btnImg {
+    outline: 0;
+}
