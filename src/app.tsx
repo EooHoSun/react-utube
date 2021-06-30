@@ -6,6 +6,7 @@ import SearchBar from './components/search_bar/search_bar';
 import VideoDetail from './components/video_detail/video_detail';
 import Youtube from './service/youtube';
 
+
 type AppPropsType = {
   youtube : Youtube;
 }
@@ -45,6 +46,7 @@ export type VideoListPropsType = {
   onVideoClick : Function;
   display : string;
 };
+
 
 const App : React.FunctionComponent<AppPropsType> = ({youtube}) => {
   const [videos, setVideos] = useState<Array<VideoType>>([]);
