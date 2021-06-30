@@ -1,18 +1,17 @@
-import React from 'react';
-import { memo } from 'react';
-import { useRef } from 'react';
+import React, {memo, useRef} from 'react';
 import styles from './search_bar.module.css';
+import { SearchBarPropsType } from 'app';
 
-const SearchBar = memo(({onSearch}) => {
-    const inputRef = useRef();
+const SearchBar : React.FunctionComponent<SearchBarPropsType> = memo(({onSearch}) => {
+    const inputRef = useRef<any>();
 
-    const handleSearch = () => {
+    const handleSearch = () : void => {
         const value = inputRef.current.value;
         onSearch(value);
         inputRef.current.value = "";
     };
 
-    const handleKeyPress = e => {
+    const handleKeyPress  = ( e : React.KeyboardEvent ) : void => {
         if(e.key === 'Enter') {
             handleSearch();
         }
@@ -23,7 +22,7 @@ const SearchBar = memo(({onSearch}) => {
         <div className={styles.container}>
             <img
             className={styles.thumbnail}
-            src="/fabicon.ico"
+            src="https://archivenew.vop.co.kr/images/33471878eeb1fa99050130125a1d5b3e/2020-05/marked/24023757_youtube_logo_dark.jpg"
             alt="main"
             />
             <input

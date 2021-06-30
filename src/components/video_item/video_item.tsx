@@ -1,12 +1,14 @@
 import React, {memo} from 'react';
 import styles from './video_item.module.css';
+import { VideoItemPropsType } from 'app';
 
-const VideoItem = memo(({ video, onVideoClick, display }) => {
+const VideoItem  : React.FunctionComponent<VideoItemPropsType> = memo(({ video, onVideoClick, display }) => {
   const displayType = display === 'list' ? styles.list : styles.grid;
 
-  const handleClick = e => {
+  const handleClick = () => {
       onVideoClick(video);
   };
+
 
   return (
     <li

@@ -1,12 +1,14 @@
 import React from 'react';
 import styles from './video_detail.module.css';
-const VideoDetail = ({video}) => {
+import { VideoDetailPropsType } from 'app';
+
+const VideoDetail : React.FunctionComponent<VideoDetailPropsType> = ({video}) => {
     return (
         <section className={styles.detail}> 
 
             <iframe
                 className={styles.video}
-                type="text/html"
+                //type="text/html"
                 width="100%"
                 height="500px"
                 title="youtube video clip"

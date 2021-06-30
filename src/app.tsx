@@ -4,12 +4,51 @@ import styles from './app.module.css';
 import VideoList from './components/video_list/video_list';
 import SearchBar from './components/search_bar/search_bar';
 import VideoDetail from './components/video_detail/video_detail';
+import Youtube from './service/youtube';
 
+type AppPropsType = {
+  youtube : Youtube;
+}
+type SnippetType = {
+  title : string;
+  channelTitle : string;
+  thumbnails : ThumbnailsType;
+}
+type ThumbnailsType = {
+  medium : UrlType
+}
+type UrlType = {
+  url : string;
+}
+type VideoType = {
+  snippet : SnippetType;
+  description : string;
+  id: string;
+}
 
+export type SearchBarPropsType = {
+  onSearch : Function;
+}
 
-const App = ({youtube}) => {
-  const [videos, setVideos] = useState([]);
-  const [selectedVideo, setSelectedVideo] = useState('');
+export type VideoItemPropsType = {
+  video : VideoType;
+  onVideoClick : Function;
+  display : string;
+}
+
+export type VideoDetailPropsType = {
+  video : VideoType;
+}
+
+export type VideoListPropsType = {
+  videoList : Array<VideoType>;
+  onVideoClick : Function;
+  display : string;
+};
+
+const App : React.FunctionComponent<AppPropsType> = ({youtube}) => {
+  const [videos, setVideos] = useState<Array<VideoType>>([]);
+  const [selectedVideo, setSelectedVideo] = useState<any>(null);
 
   const selectVideo = useCallback(video => {
     setSelectedVideo(video);
@@ -27,7 +66,6 @@ const App = ({youtube}) => {
     .then(res => setVideos(res));
   }, [youtube]);
 
-  console.log('전체 랜더링!!');
   return (
     <div className={styles.app}>
       <SearchBar onSearch={handleSearch}/>
