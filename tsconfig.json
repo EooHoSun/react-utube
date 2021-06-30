@@ -1,4 +1,6 @@
-{"compilerOptions": {
+{
+  "experimentalDecorators": true,
+  "compilerOptions": {
   "target": "es6",
   "lib": [
     "dom",
