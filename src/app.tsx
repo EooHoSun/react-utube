@@ -1,14 +1,15 @@
 
-import { useEffect, useState, useCallback } from 'react';
+import React from 'react';
 import styles from './app.module.css';
 import VideoList from './components/video_list/video_list';
 import SearchBar from './components/search_bar/search_bar';
 import VideoDetail from './components/video_detail/video_detail';
-import Youtube from './service/youtube';
+import {observer, inject} from 'mobx-react';
+import {Store} from 'store/store'
 
 
 type AppPropsType = {
-  youtube : Youtube;
+  store : Store;
 }
 type SnippetType = {
   title : string;
@@ -21,19 +22,20 @@ type ThumbnailsType = {
 type UrlType = {
   url : string;
 }
-type VideoType = {
+
+export type VideoType = {
   snippet : SnippetType;
   description : string;
   id: string;
 }
 
 export type SearchBarPropsType = {
-  onSearch : Function;
+  store ?: Store;
 }
 
 export type VideoItemPropsType = {
   video : VideoType;
-  onVideoClick : Function;
+  store ?: Store;
   display : string;
 }
 
@@ -43,52 +45,61 @@ export type VideoDetailPropsType = {
 
 export type VideoListPropsType = {
   videoList : Array<VideoType>;
-  onVideoClick : Function;
   display : string;
 };
 
 
-const App : React.FunctionComponent<AppPropsType> = ({youtube}) => {
-  const [videos, setVideos] = useState<Array<VideoType>>([]);
-  const [selectedVideo, setSelectedVideo] = useState<any>(null);
+@inject('store')
+@observer
+class App2 extends React.Component<AppPropsType,AppPropsType>{
 
-  const selectVideo = useCallback(video => {
-    setSelectedVideo(video);
-  }, []);
+  render(){
+    const {store} = this.props;
+    return (
+      <div className={styles.app}>
+        <SearchBar/>
+        <section className={styles.content}>
+          {
+            store.selectedVideo && 
+            (<div className={styles.detail}>
+              <VideoDetail video={store.selectedVideo}/>
+            </div>)
+          }
+          <div className={styles.list}>
+            <VideoList 
+              videoList={store.videoList}
+              display={store.selectedVideo ? 'list' : 'grid'}
+            />
+          </div>
+        </section>
+        
+      </div>
+    );
+  }
+}
 
-  const handleSearch = useCallback(query => {
-    youtube.search(query)
-    .then(res => setVideos(res));
-
-    setSelectedVideo(null);
-  }, []);
-
-  useEffect(() => {
-    youtube.mostPopular()
-    .then(res => setVideos(res));
-  }, [youtube]);
+const App : React.FunctionComponent<AppPropsType> = inject('store')(observer(({store})  => {
 
   return (
     <div className={styles.app}>
-      <SearchBar onSearch={handleSearch}/>
+      <SearchBar/>
       <section className={styles.content}>
         {
-        selectedVideo && 
+          store.selectedVideo && 
           (<div className={styles.detail}>
-            <VideoDetail video={selectedVideo}/>
+            <VideoDetail video={store.selectedVideo}/>
           </div>)
         }
         <div className={styles.list}>
           <VideoList 
-            videoList={videos}
-            onVideoClick={selectVideo}
-            display={selectedVideo ? 'list' : 'grid'}
+            videoList={store.videoList}
+            display={store.selectedVideo ? 'list' : 'grid'}
           />
         </div>
       </section>
       
     </div>
   );
-}
+}));
 
 export default App;

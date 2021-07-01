@@ -1,39 +1,66 @@
 import { VideoType } from "app";
-import { observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import Youtube from "service/youtube";
 import axios, { AxiosInstance } from "axios";
 
 
-class Store{
+export class Store{
 
     @observable 
-    private videoList : Array<any> = [];
+    private _videoList : Array<VideoType> = [];
     @observable
-    private selectedVideo : VideoType | undefined;
-    private youtube : Youtube;
+    private _selectedVideo: any;
+    private _youtube : Youtube;
 
     constructor(httpClient : AxiosInstance) {
-        this.youtube = new Youtube(httpClient);
+        makeObservable(this);
+        this._youtube = new Youtube(httpClient);
         this.initVideoList();
     }
 
-    initVideoList(){
-        this.youtube.mostPopular()
+    public get videoList() : Array<VideoType> {
+        console.log(`computed videoList`);
+        return this._videoList;
+    }
+
+    public get selectedVideo() : VideoType{
+        console.log(`computed selectedVideo`);
+        return this._selectedVideo;
+    }
+    
+    public set videoList(videoList : Array<VideoType>) {
+        this._videoList = videoList;
+    }
+
+    public set selectedVideo(selectedVideo : VideoType){
+        this._selectedVideo = selectedVideo;
+    }
+
+    @action
+    public initVideoList():void{
+        console.log('initVideoList');
+        this._youtube = new Youtube(httpClient);
+        this._youtube.mostPopular()
         .then(res => {
             this.videoList = res;
         });
     }
     
-    selectVideo(video : VideoType){
+    @action
+    public selectVideo(video : VideoType):void{
+        console.log('selectVideo');
+        debugger;
         this.selectedVideo = video;
     }
 
-    handleSearch(query : string){
-        this.youtube.search(query)
+    @action
+    public handleSearch(query : string):void{
+        console.log('handleSearch');
+        this._youtube.search(query)
         .then(res => {
             this.videoList = res;
         });
-        this.selectedVideo = undefined;
+        //this.selectedVideo = null;
     }
 
 }
@@ -44,4 +71,5 @@ const httpClient = axios.create({
   baseURL: 'https://www.googleapis.com/youtube/v3',
   params: {key: youtubeAPIKey},
 });
+
 export default new Store(httpClient);

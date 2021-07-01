@@ -1,12 +1,14 @@
-import React, {memo} from 'react';
+import React from 'react';
 import styles from './video_item.module.css';
 import { VideoItemPropsType } from 'app';
+import {inject} from 'mobx-react';
 
-const VideoItem  : React.FunctionComponent<VideoItemPropsType> = memo(({ video, onVideoClick, display }) => {
+
+const VideoItem  : React.FunctionComponent<VideoItemPropsType> = inject('store')(({ store, video, display }) => {
   const displayType = display === 'list' ? styles.list : styles.grid;
 
   const handleClick = () => {
-      onVideoClick(video);
+    store?.selectVideo(video);
   };
 
 

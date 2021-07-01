@@ -1,13 +1,16 @@
-import React, {memo, useRef} from 'react';
+import React, {useRef} from 'react';
 import styles from './search_bar.module.css';
 import { SearchBarPropsType } from 'app';
+import { inject } from 'mobx-react';
 
-const SearchBar : React.FunctionComponent<SearchBarPropsType> = memo(({onSearch}) => {
-    const inputRef = useRef<any>();
+const SearchBar : React.FunctionComponent<SearchBarPropsType> = inject('store')(({store}) => {
+
+    const inputRef:React.MutableRefObject<any>  = useRef();
 
     const handleSearch = () : void => {
         const value = inputRef.current.value;
-        onSearch(value);
+        //onSearch(value);
+        store?.handleSearch(value);
         inputRef.current.value = "";
     };
 
@@ -42,6 +45,6 @@ const SearchBar : React.FunctionComponent<SearchBarPropsType> = memo(({onSearch}
         </div>    
     </header>    
         
-    );});
+    )});
 
 export default SearchBar;

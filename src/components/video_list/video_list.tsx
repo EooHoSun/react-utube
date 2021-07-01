@@ -4,15 +4,17 @@ import styles from '../video_list/video_list.module.css';
 import { VideoListPropsType } from 'app';
 
 
-const VideoList : React.FunctionComponent<VideoListPropsType>  = ({videoList, onVideoClick, display}) => {
+const VideoList : React.FunctionComponent<VideoListPropsType>  = ({ videoList, display}) => {
+    
+
     return (
         <ul className={styles.videos}>
             {
-                videoList && videoList.map((video) => <VideoItem key={video.id} video={video} onVideoClick={onVideoClick} display={display}/>)
+                videoList && videoList.map((video) => <VideoItem  key={video.id} video={video} display={display}/>)
             }
         </ul>            
         );
-}
+};
 
 
 export default VideoList;
